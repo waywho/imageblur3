@@ -27,26 +27,10 @@ class ImageBlur
 		return @locus
 	end
 
-	def blur_image
+	def blur(distance)
 		self.locate_pixl
 
 		@locus.each do |row, pixl|
-			can_move_left = pixl != 0
-			can_move_right = pixl != @width
-			can_move_up = row != 0
-			can_move_down = row != @height
-			
-			@image[row][pixl - 1] = 1 if can_move_left
-			@image[row][pixl + 1] = 1 if can_move_right
-			@image[row - 1][pixl] = 1 if can_move_up
-			@image[row + 1][pixl] = 1 if can_move_down
-		end
-	end
-
-	def blur(distance)
-		pixl_locus = self.locate_pixl
-
-		pixl_locus.each do |row, pixl|
 			can_move_left_by = Proc.new {|n| pixl != 0 && pixl - n >= 0}
 			can_move_right_by = Proc.new {|n| pixl != @width && pixl + n <= @width}
 			can_move_up_by = Proc.new{|n| row != 0 && row - n >= 0}
