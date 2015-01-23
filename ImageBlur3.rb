@@ -15,23 +15,22 @@ class ImageBlur
 	end
 
 	def locate_pixl
-		locus = []
+		@locus = []
 		@image.each_index do |row_index|
 			sub_image = @image[row_index]
 			sub_image.each_index do |pixl_index|
 				if sub_image[pixl_index] == 1
-					locus << [row_index, pixl_index]
+					@locus << [row_index, pixl_index]
 				end
 			end
 		end
-		return locus
+		return @locus
 	end
 
 	def blur_image
-		pixl_locus = self.locate_pixl
-		puts
+		self.locate_pixl
 
-		pixl_locus.each do |row, pixl|
+		@locus.each do |row, pixl|
 			can_move_left = pixl != 0
 			can_move_right = pixl != @width
 			can_move_up = row != 0
